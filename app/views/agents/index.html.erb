@@ -1,0 +1,20 @@
+<h1>AI Agent Boilerplate</h1>
+
+<div class="chat-container" style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; height: 400px; overflow-y: scroll;">
+  <% @messages.each do |message| %>
+    <div class="message <%= message.role %>" style="margin-bottom: 10px; text-align: <%= message.role == 'user' ? 'right' : 'left' %>;">
+      <strong><%= message.role.capitalize %>:</strong>
+      <span style="background-color: <%= message.role == 'user' ? '#e1f5fe' : '#f1f8e9' %>; padding: 8px; border-radius: 5px; display: inline-block;">
+        <%= message.content %>
+      </span>
+    </div>
+  <% end %>
+</div>
+
+<%= form_with url: agents_chat_path, local: true do |form| %>
+  <%= form.hidden_field :conversation_id, value: @conversation.id %>
+  <div class="input-group">
+    <%= form.text_field :message, placeholder: "Type your message...", style: "width: 80%; padding: 10px;" %>
+    <%= form.submit "Send", style: "padding: 10px 20px;" %>
+  </div>
+<% end %>
