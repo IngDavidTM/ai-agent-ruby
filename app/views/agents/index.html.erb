@@ -1,20 +1,46 @@
-<h1>AI Agent Boilerplate</h1>
-
-<div class="chat-container" style="border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; height: 400px; overflow-y: scroll;">
-  <% @messages.each do |message| %>
-    <div class="message <%= message.role %>" style="margin-bottom: 10px; text-align: <%= message.role == 'user' ? 'right' : 'left' %>;">
-      <strong><%= message.role.capitalize %>:</strong>
-      <span style="background-color: <%= message.role == 'user' ? '#e1f5fe' : '#f1f8e9' %>; padding: 8px; border-radius: 5px; display: inline-block;">
-        <%= message.content %>
-      </span>
-    </div>
-  <% end %>
+<div class="liquid-background">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 </div>
 
-<%= form_with url: agents_chat_path, local: true do |form| %>
-  <%= form.hidden_field :conversation_id, value: @conversation.id %>
-  <div class="input-group">
-    <%= form.text_field :message, placeholder: "Type your message...", style: "width: 80%; padding: 10px;" %>
-    <%= form.submit "Send", style: "padding: 10px 20px;" %>
+<div class="glass-interface">
+  <header class="glass-header">
+    <div class="header-content">
+      <span class="status-dot"></span>
+      <h1>Agent <span>OS</span></h1>
+    </div>
+  </header>
+
+  <div class="chat-area" id="chat-container">
+    <% @messages.each do |message| %>
+      <div class="message-wrapper <%= message.role %>">
+        <div class="message-bubble">
+          <%= message.content %>
+        </div>
+        <span class="message-time">Now</span>
+      </div>
+    <% end %>
   </div>
-<% end %>
+
+  <div class="glass-input-area">
+    <%= form_with url: agents_chat_path, local: true, class: "chat-form" do |form| %>
+      <%= form.hidden_field :conversation_id, value: @conversation.id %>
+      
+      <div class="input-wrapper">
+        <%= form.text_field :message, placeholder: "Ask anything...", class: "glass-input", autocomplete: "off" %>
+        <button type="submit" class="glass-button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4L12 20M12 4L6 10M12 4L18 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // Auto-scroll to bottom of chat
+  const chatContainer = document.getElementById('chat-container');
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+</script>

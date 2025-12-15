@@ -1,3 +1,275 @@
-// Place all the styles related to the Agents controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// iOS 26 Liquid Glass Design System
+$glass-surface: rgba(255, 255, 255, 0.1);
+$glass-border: rgba(255, 255, 255, 0.2);
+$glass-highlight: rgba(255, 255, 255, 0.3);
+$text-primary: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.7);
+$accent-color: #0a84ff;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #000;
+  color: $text-primary;
+  overflow: hidden; // Prevent scrolling on main body
+  height: 100vh;
+}
+
+// Fluid Background
+.liquid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: #0f0c29; 
+  background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+  overflow: hidden;
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: float 10s infinite ease-in-out;
+  }
+
+  .orb-1 {
+    width: 60vh;
+    height: 60vh;
+    background: #ff00cc;
+    top: -10%;
+    left: -10%;
+    animation-duration: 15s;
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  }
+
+  .orb-2 {
+    width: 40vh;
+    height: 40vh;
+    background: #333399;
+    bottom: 10%;
+    right: -5%;
+    animation-duration: 12s;
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  }
+  
+  .orb-3 {
+    width: 30vh;
+    height: 30vh;
+    background: #00d2ff;
+    top: 40%;
+    left: 40%;
+    animation-duration: 20s;
+    background: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+  }
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -50px) rotate(10deg); }
+  66% { transform: translate(-20px, 20px) rotate(-5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+// Glass Interface Layout
+.glass-interface {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(20, 20, 30, 0.4);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px); // Safari support
+  box-shadow: inset 0 0 0 1px $glass-border;
+}
+
+// Header
+.glass-header {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $glass-border;
+  background: rgba(255, 255, 255, 0.05);
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.5px;
+    
+    span {
+      font-weight: 700;
+      opacity: 0.5;
+    }
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: #39ff14;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #39ff14;
+  }
+}
+
+// Chat Area
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-behavior: smooth;
+
+  // Custom Scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+  
+  .message-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    &.user {
+      align-self: flex-end;
+      align-items: flex-end;
+      
+      .message-bubble {
+        background: linear-gradient(135deg, $accent-color, darken($accent-color, 15%));
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 8px 32px rgba(10, 132, 255, 0.3);
+      }
+    }
+    
+    &.assistant {
+      align-self: flex-start;
+      align-items: flex-start;
+      
+      .message-bubble {
+        background: $glass-surface;
+        border: 1px solid $glass-border;
+        border-bottom-left-radius: 4px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .message-bubble {
+    padding: 16px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    position: relative;
+    overflow: hidden;
+    
+    // Gloss shine
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+  }
+  
+  .message-time {
+    font-size: 11px;
+    color: $text-secondary;
+    margin-top: 6px;
+    padding: 0 4px;
+  }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+// Input Area
+.glass-input-area {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid $glass-border;
+  
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: $glass-surface;
+    border: 1px solid $glass-border;
+    border-radius: 30px;
+    padding: 4px;
+    transition: all 0.3s ease;
+    
+    &:focus-within {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: $glass-highlight;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  .glass-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #fff;
+    font-family: inherit;
+    outline: none;
+    
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+  
+  .glass-button {
+    background: #111;
+    border: 1px solid #333;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 2px;
+    
+    &:hover {
+      background: $accent-color;
+      border-color: transparent;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(10, 132, 255, 0.5);
+    }
+    
+    svg {
+      transition: transform 0.2s ease;
+    }
+    
+    &:active svg {
+      transform: translateX(2px) translateY(-2px);
+    }
+  }
+}
