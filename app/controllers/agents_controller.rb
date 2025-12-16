@@ -16,7 +16,7 @@ class AgentsController < ApplicationController
     end
 
     # Call LLM Service
-    llm = LlmService.new(adapter: :openai)
+    llm = LlmService.new
     response = llm.chat(history)
 
     # Save assistant message
