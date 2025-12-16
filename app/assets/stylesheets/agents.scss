@@ -24,7 +24,7 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  background: #0f0c29; 
+  background: #0f0c29;
   background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
   overflow: hidden;
 
@@ -43,7 +43,7 @@ body {
     top: -10%;
     left: -10%;
     animation-duration: 15s;
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
   }
 
   .orb-2 {
@@ -53,9 +53,9 @@ body {
     bottom: 10%;
     right: -5%;
     animation-duration: 12s;
-    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
   }
-  
+
   .orb-3 {
     width: 30vh;
     height: 30vh;
@@ -63,15 +63,77 @@ body {
     top: 40%;
     left: 40%;
     animation-duration: 20s;
-    background: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    background: radial-gradient(circle, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+  }
+}
+
+// Fluid Background
+.liquid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: #0f0c29;
+  background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+  overflow: hidden;
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: float 10s infinite ease-in-out;
+  }
+
+  .orb-1 {
+    width: 60vh;
+    height: 60vh;
+    background: #ff00cc;
+    top: -10%;
+    left: -10%;
+    animation-duration: 15s;
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  }
+
+  .orb-2 {
+    width: 40vh;
+    height: 40vh;
+    background: #333399;
+    bottom: 10%;
+    right: -5%;
+    animation-duration: 12s;
+    background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+  }
+
+  .orb-3 {
+    width: 30vh;
+    height: 30vh;
+    background: #00d2ff;
+    top: 40%;
+    left: 40%;
+    animation-duration: 20s;
+    background: radial-gradient(circle, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
   }
 }
 
 @keyframes float {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(30px, -50px) rotate(10deg); }
-  66% { transform: translate(-20px, 20px) rotate(-5deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  33% {
+    transform: translate(30px, -50px) rotate(10deg);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) rotate(-5deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
 }
 
 // Glass Interface Layout
@@ -105,7 +167,7 @@ body {
     font-weight: 500;
     margin: 0;
     letter-spacing: -0.5px;
-    
+
     span {
       font-weight: 700;
       opacity: 0.5;
@@ -135,38 +197,54 @@ body {
   &::-webkit-scrollbar {
     width: 6px;
   }
+
   &::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 3px;
   }
-  
+
   .message-wrapper {
     display: flex;
     flex-direction: column;
     max-width: 70%;
     animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    
+
     &.user {
       align-self: flex-end;
       align-items: flex-end;
-      
+
       .message-bubble {
-        background: linear-gradient(135deg, $accent-color, darken($accent-color, 15%));
+        // Liquid Effect for User
+        background: linear-gradient(135deg, rgba($accent-color, 0.8), rgba($accent-color, 0.4));
+        backdrop-filter: blur(12px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         border-bottom-right-radius: 4px;
-        box-shadow: 0 8px 32px rgba(10, 132, 255, 0.3);
+        box-shadow:
+          0 4px 15px rgba(0, 0, 0, 0.1),
+          inset 0 0 20px rgba(255, 255, 255, 0.2),
+          inset 0 0 5px rgba(255, 255, 255, 0.4); // Rim light
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
       }
     }
-    
+
     &.assistant {
       align-self: flex-start;
       align-items: flex-start;
-      
+
       .message-bubble {
-        background: $glass-surface;
-        border: 1px solid $glass-border;
+        // Liquid Effect for AI
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px) saturate(150%);
+        border: 1px solid rgba(255, 255, 255, 0.4);
         border-bottom-left-radius: 4px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          inset 0 0 15px rgba(255, 255, 255, 0.1),
+          inset 1px 1px 2px rgba(255, 255, 255, 0.5); // Highlight
+        color: #fff;
+
+        // Optional: Apply the SVG distortion if desired, but blur/gloss is usually safer and cleaner
+        // filter: url(#liquid-distortion); 
       }
     }
   }
@@ -178,20 +256,21 @@ body {
     line-height: 1.5;
     position: relative;
     overflow: hidden;
-    
-    // Gloss shine
-    &::before {
+
+    // Gloss shine overlay
+    &::after {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent);
+      border-radius: 20px 20px 60% 60% / 20px 20px 10px 10px;
       pointer-events: none;
     }
   }
-  
+
   .message-time {
     font-size: 11px;
     color: $text-secondary;
@@ -201,8 +280,15 @@ body {
 }
 
 @keyframes popIn {
-  0% { transform: scale(0.9); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 // Input Area
@@ -210,24 +296,26 @@ body {
   padding: 24px;
   background: rgba(255, 255, 255, 0.02);
   border-top: 1px solid $glass-border;
-  
+
   .input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    background: $glass-surface;
-    border: 1px solid $glass-border;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 30px;
     padding: 4px;
     transition: all 0.3s ease;
-    
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+
     &:focus-within {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: $glass-highlight;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.2);
     }
   }
-  
+
   .glass-input {
     flex: 1;
     background: transparent;
@@ -237,15 +325,15 @@ body {
     color: #fff;
     font-family: inherit;
     outline: none;
-    
+
     &::placeholder {
       color: rgba(255, 255, 255, 0.4);
     }
   }
-  
+
   .glass-button {
-    background: #111;
-    border: 1px solid #333;
+    background: linear-gradient(135deg, #1c1c1e, #000); // Dark glossy
+    border: 1px solid rgba(255, 255, 255, 0.2);
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -254,20 +342,22 @@ body {
     justify-content: center;
     color: #fff;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     margin-right: 2px;
-    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 2px rgba(255, 255, 255, 0.2);
+
     &:hover {
       background: $accent-color;
-      border-color: transparent;
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(10, 132, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba($accent-color, 0.6);
     }
-    
+
     svg {
       transition: transform 0.2s ease;
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
     }
-    
+
     &:active svg {
       transform: translateX(2px) translateY(-2px);
     }
