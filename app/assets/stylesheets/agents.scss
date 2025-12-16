@@ -142,9 +142,9 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: rgba(20, 20, 30, 0.4);
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px); // Safari support
+  background: rgba(20, 20, 30, 0.2); // Reduced opacity for clarity
+  // backdrop-filter: blur(50px); // Removed as requested to see bg
+  // -webkit-backdrop-filter: blur(50px);
   box-shadow: inset 0 0 0 1px $glass-border;
 }
 
