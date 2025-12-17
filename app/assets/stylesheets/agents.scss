@@ -214,16 +214,17 @@ body {
       align-items: flex-end;
 
       .message-bubble {
-        // Liquid Effect for User
-        background: linear-gradient(135deg, rgba($accent-color, 0.8), rgba($accent-color, 0.4));
-        backdrop-filter: blur(12px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        // CLEAR LIQUID GLASS - User
+        background: linear-gradient(135deg, rgba($accent-color, 0.1), rgba($accent-color, 0.02)); // Ultra clear
+        backdrop-filter: blur(8px) saturate(180%) contrast(1.1); // Low blur = Clear glass
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-top: 1px solid rgba(255, 255, 255, 0.7);
         border-bottom-right-radius: 4px;
         box-shadow:
-          0 4px 15px rgba(0, 0, 0, 0.1),
-          inset 0 0 20px rgba(255, 255, 255, 0.2),
-          inset 0 0 5px rgba(255, 255, 255, 0.4); // Rim light
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          0 10px 40px rgba(0, 0, 0, 0.15),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.2), // Inner sharp rim
+          inset 0 0 15px rgba(255, 255, 255, 0.1);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
       }
     }
 
@@ -232,42 +233,55 @@ body {
       align-items: flex-start;
 
       .message-bubble {
-        // Liquid Effect for AI
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(15px) saturate(150%);
-        border: 1px solid rgba(255, 255, 255, 0.4);
+        // CLEAR LIQUID GLASS - AI
+        background: rgba(255, 255, 255, 0.01); // Practically invisible
+        backdrop-filter: blur(6px) saturate(160%) brightness(1.1); // Very clear
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-top: 1px solid rgba(255, 255, 255, 0.8); // Specular highlight
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
         border-bottom-left-radius: 4px;
         box-shadow:
-          0 8px 32px rgba(0, 0, 0, 0.1),
-          inset 0 0 15px rgba(255, 255, 255, 0.1),
-          inset 1px 1px 2px rgba(255, 255, 255, 0.5); // Highlight
+          0 15px 40px rgba(0, 0, 0, 0.1),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+          inset 0 5px 15px rgba(255, 255, 255, 0.1);
         color: #fff;
-
-        // Optional: Apply the SVG distortion if desired, but blur/gloss is usually safer and cleaner
-        // filter: url(#liquid-distortion); 
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); // Ensure text legibility on clear glass
       }
     }
   }
 
   .message-bubble {
     padding: 16px 20px;
-    border-radius: 20px;
+    border-radius: 26px; // Organic roundness
     font-size: 16px;
     line-height: 1.5;
     position: relative;
     overflow: hidden;
 
-    // Gloss shine overlay
-    &::after {
+    // Crisp Reflection
+    &::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 50%;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent);
-      border-radius: 20px 20px 60% 60% / 20px 20px 10px 10px;
+      height: 45%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+      border-radius: 22px 22px 60% 60% / 15px 15px 10px 10px;
       pointer-events: none;
+    }
+
+    // Bottom volumetric highlight (subtle)
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: 20%;
+      right: 20%;
+      height: 20%;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+      pointer-events: none;
+      filter: blur(4px);
     }
   }
 
