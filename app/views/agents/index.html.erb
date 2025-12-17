@@ -39,7 +39,7 @@
     <% @messages.each do |message| %>
       <div class="message-wrapper <%= message.role %>">
         <div class="message-bubble">
-          <%= message.content %>
+          <%= markdown(message.content) %>
         </div>
         <span class="message-time">Now</span>
       </div>

@@ -58,3 +58,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "gemini-ai"
 
 gem "dotenv-rails", "~> 3.2"
+
+gem "redcarpet", "~> 3.6"
