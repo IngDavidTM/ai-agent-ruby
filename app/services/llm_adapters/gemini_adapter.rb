@@ -14,9 +14,19 @@ module LlmAdapters
         require 'json'
 
         # Direct API call to ensure we hit v1beta
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=#{@api_key}"
+        # Direct API call to ensure we hit v1beta
+        # Force IPv4 resolution to avoid IPv6 timeout issues on this machine
+        require 'resolv'
+        host = "generativelanguage.googleapis.com"
+        # Get the first A record (IPv4)
+        ip = Resolv::DNS.new.getresource(host, Resolv::DNS::Resource::IN::A).address.to_s
         
-        conn = Faraday.new(url: url)
+        url = "https://#{ip}/v1beta/models/gemini-2.5-flash:generateContent?key=#{@api_key}"
+        
+        conn = Faraday.new(url: url) do |f|
+          f.headers['Host'] = host # Required for SNI/VirtualHost
+          f.ssl[:verify] = false # Required because we are using IP in URL (Certificate Mismatch expected)
+        end
         
         # Prepare payload
         last_message = messages.last[:content]
