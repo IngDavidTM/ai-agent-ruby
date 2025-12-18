@@ -63,7 +63,108 @@
 </div>
 
 <script>
-  // Auto-scroll to bottom of chat
-  const chatContainer = document.getElementById('chat-container');
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.chat-form');
+    const input = document.querySelector('.glass-input');
+    const chatContainer = document.getElementById('chat-container');
+
+    // Scroll to bottom on load
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (!message) return;
+
+      // 1. Clear input & Optimistic UI
+      input.value = '';
+      appendMessage('user', message);
+      
+      // 2. Add Loading Indicator
+      const loadingId = appendLoading();
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      try {
+        // 3. Send Request
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ 
+            message: message,
+            conversation_id: form.querySelector('input[name="conversation_id"]').value 
+          })
+        });
+
+        const data = await response.json();
+
+        // 4. Replace Loading with Response
+        removeLoading(loadingId);
+        
+        if (data.success) {
+          appendMessage('assistant', data.html, true); // true = isHtml
+        } else {
+          appendMessage('assistant', "Error: " + (data.error || "Something went wrong"));
+        }
+
+      } catch (error) {
+        removeLoading(loadingId);
+        appendMessage('assistant', "Network Error: Could not reach the agent.");
+        console.error("Chat Error:", error);
+      }
+      
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    });
+
+    function appendMessage(role, content, isHtml = false) {
+      const wrapper = document.createElement('div');
+      wrapper.className = `message-wrapper ${role}`;
+      
+      const bubble = document.createElement('div');
+      bubble.className = 'message-bubble';
+      
+      if (isHtml) {
+        bubble.innerHTML = content;
+      } else {
+        bubble.textContent = content;
+      }
+
+      const time = document.createElement('span');
+      time.className = 'message-time';
+      time.textContent = 'Now';
+
+      wrapper.appendChild(bubble);
+      wrapper.appendChild(time);
+      chatContainer.appendChild(wrapper);
+    }
+
+    function appendLoading() {
+      const id = 'loading-' + Date.now();
+      const wrapper = document.createElement('div');
+      wrapper.id = id;
+      wrapper.className = 'message-wrapper assistant';
+      
+      const bubble = document.createElement('div');
+      bubble.className = 'message-bubble';
+      bubble.innerHTML = `
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      `;
+
+      wrapper.appendChild(bubble);
+      chatContainer.appendChild(wrapper);
+      return id;
+    }
+
+    function removeLoading(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+  });
 </script>

@@ -20,8 +20,21 @@ class AgentsController < ApplicationController
     response = llm.chat(history)
 
     # Save assistant message
-    @conversation.messages.create(role: response[:role], content: response[:content])
+    ai_message = @conversation.messages.create(role: response[:role], content: response[:content])
 
-    redirect_to root_path(conversation_id: @conversation.id)
+    respond_to do |format|
+      format.html { redirect_to root_path(conversation_id: @conversation.id) }
+      format.json { render json: { 
+        success: true, 
+        message: ai_message.content,
+        html: ApplicationController.helpers.markdown(ai_message.content) # Render markdown server-side
+      } }
+    end
+  rescue => e
+    Rails.logger.error "Chat Error: #{e.message}"
+    respond_to do |format|
+      format.html { redirect_to root_path(conversation_id: @conversation.id), alert: "Error: #{e.message}" }
+      format.json { render json: { success: false, error: e.message }, status: :unprocessable_entity }
+    end
   end
 end
