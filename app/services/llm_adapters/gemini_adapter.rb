@@ -36,9 +36,25 @@ module LlmAdapters
           }]
         }
 
-        response = conn.post do |req|
-          req.headers['Content-Type'] = 'application/json'
-          req.body = payload.to_json
+        # Prepare payload
+        last_message = messages.last[:content]
+        payload = {
+          contents: [{
+            parts: [{ text: last_message }]
+          }]
+        }
+
+        response = nil
+        # Retry up to 3 times for 503 errors
+        3.times do |attempt|
+          response = conn.post do |req|
+            req.headers['Content-Type'] = 'application/json'
+            req.body = payload.to_json
+          end
+
+          break unless response.status == 503
+          
+          sleep(2 ** (attempt + 1)) # 2s, 4s, 8s...
         end
 
         if response.status == 200
@@ -51,6 +67,8 @@ module LlmAdapters
           else
             local_response(messages.last[:content], "Gemini Empty Response")
           end
+        elsif response.status == 503
+          local_response(messages.last[:content], "Gemini Overloaded (503). Try again in a minute.")
         else
           local_response(messages.last[:content], "Gemini Error #{response.status}: #{response.body}")
         end
