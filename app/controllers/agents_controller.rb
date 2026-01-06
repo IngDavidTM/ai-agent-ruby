@@ -1,6 +1,7 @@
 class AgentsController < ApplicationController
   def index
-    @conversation = Conversation.last || Conversation.create(title: "New Chat")
+    @conversations = Conversation.order(created_at: :desc)
+    @conversation = Conversation.find_by(id: params[:conversation_id]) || @conversations.first || Conversation.create(title: "New Chat")
     @messages = @conversation.messages.order(:created_at)
   end
 

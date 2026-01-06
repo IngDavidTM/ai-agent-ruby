@@ -28,38 +28,62 @@
 </svg>
 
 <div class="glass-interface">
-  <header class="glass-header">
-    <div class="header-content">
-      <span class="status-dot"></span>
-      <h1>Agent <span>OS</span></h1>
+  <!-- Sidebar -->
+  <aside class="glass-sidebar">
+    <div class="sidebar-header">
+      <a href="<%= root_path %>" class="new-chat-button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>New Chat</span>
+      </a>
     </div>
-  </header>
 
-  <div class="chat-area" id="chat-container">
-    <% @messages.each do |message| %>
-      <div class="message-wrapper <%= message.role %>">
-        <div class="message-bubble">
-          <%= markdown(message.content) %>
+    <div class="history-list">
+      <% @conversations.each do |conv| %>
+        <%= link_to root_path(conversation_id: conv.id), class: "history-item #{'active' if conv.id == @conversation.id}" do %>
+          <span class="history-title"><%= conv.title || "Conversation #{conv.id}" %></span>
+          <span class="history-date"><%= time_ago_in_words(conv.created_at) %> ago</span>
+        <% end %>
+      <% end %>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="glass-header">
+      <div class="header-content">
+        <span class="status-dot"></span>
+        <h1>Agent <span>OS</span></h1>
+      </div>
+    </header>
+
+    <div class="chat-area" id="chat-container">
+      <% @messages.each do |message| %>
+        <div class="message-wrapper <%= message.role %>">
+          <div class="message-bubble">
+            <%= markdown(message.content) %>
+          </div>
+          <span class="message-time">Now</span>
         </div>
-        <span class="message-time">Now</span>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
 
-  <div class="glass-input-area">
-    <%= form_with url: agents_chat_path, local: true, class: "chat-form" do |form| %>
-      <%= form.hidden_field :conversation_id, value: @conversation.id %>
-      
-      <div class="input-wrapper">
-        <%= form.text_field :message, placeholder: "Ask anything...", class: "glass-input", autocomplete: "off" %>
-        <button type="submit" class="glass-button">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 4L12 20M12 4L6 10M12 4L18 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    <% end %>
-  </div>
+    <div class="glass-input-area">
+      <%= form_with url: agents_chat_path, local: true, class: "chat-form" do |form| %>
+        <%= form.hidden_field :conversation_id, value: @conversation.id %>
+        
+        <div class="input-wrapper">
+          <%= form.text_field :message, placeholder: "Ask anything...", class: "glass-input", autocomplete: "off" %>
+          <button type="submit" class="glass-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4L12 20M12 4L6 10M12 4L18 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      <% end %>
+    </div>
+  </main>
 </div>
 
 <script>
