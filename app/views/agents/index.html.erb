@@ -139,6 +139,9 @@
                 newUrl.searchParams.set('conversation_id', data.conversation_id);
                 newUrl.searchParams.delete('new_chat');
                 window.history.pushState({}, '', newUrl);
+                
+                // Add to sidebar dynamically
+                addToSidebar(data.conversation_id, "New Chat");
              }
           }
           appendMessage('assistant', data.html, true); // true = isHtml
@@ -201,6 +204,23 @@
     function removeLoading(id) {
       const el = document.getElementById(id);
       if (el) el.remove();
+    }
+
+    function addToSidebar(id, title) {
+      const list = document.querySelector('.history-list');
+      const link = document.createElement('a');
+      link.href = `/?conversation_id=${id}`;
+      link.className = 'history-item active';
+      link.innerHTML = `
+        <span class="history-title">${title}</span>
+        <span class="history-date">Just now</span>
+      `;
+      
+      // Remove active class from others
+      document.querySelectorAll('.history-item').forEach(item => item.classList.remove('active'));
+      
+      // Prepend to list
+      list.insertBefore(link, list.firstChild);
     }
   });
 </script>
