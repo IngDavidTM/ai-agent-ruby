@@ -31,7 +31,7 @@
   <!-- Sidebar -->
   <aside class="glass-sidebar">
     <div class="sidebar-header">
-      <a href="<%= root_path %>" class="new-chat-button">
+      <a href="<%= root_path(new_chat: true) %>" class="new-chat-button">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -129,6 +129,18 @@
         removeLoading(loadingId);
         
         if (data.success) {
+          // Update Conversation ID context for subsequent messages
+          if (data.conversation_id) {
+             const idField = form.querySelector('input[name="conversation_id"]');
+             if (!idField.value) {
+                idField.value = data.conversation_id;
+                // Update URL without refreshing
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('conversation_id', data.conversation_id);
+                newUrl.searchParams.delete('new_chat');
+                window.history.pushState({}, '', newUrl);
+             }
+          }
           appendMessage('assistant', data.html, true); // true = isHtml
         } else {
           appendMessage('assistant', "Error: " + (data.error || "Something went wrong"));

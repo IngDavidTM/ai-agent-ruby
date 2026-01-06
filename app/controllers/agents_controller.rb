@@ -1,7 +1,11 @@
 class AgentsController < ApplicationController
   def index
     @conversations = Conversation.order(created_at: :desc)
-    @conversation = Conversation.find_by(id: params[:conversation_id]) || @conversations.first || Conversation.create(title: "New Chat")
+    if params[:new_chat]
+      @conversation = Conversation.new
+    else
+      @conversation = Conversation.find_by(id: params[:conversation_id]) || @conversations.first || Conversation.new
+    end
     @messages = @conversation.messages.order(:created_at)
   end
 
@@ -27,6 +31,7 @@ class AgentsController < ApplicationController
       format.html { redirect_to root_path(conversation_id: @conversation.id) }
       format.json { render json: { 
         success: true, 
+        conversation_id: @conversation.id, 
         message: ai_message.content,
         html: ApplicationController.helpers.markdown(ai_message.content) # Render markdown server-side
       } }
