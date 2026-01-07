@@ -43,4 +43,9 @@ class AgentsController < ApplicationController
       format.json { render json: { success: false, error: e.message }, status: :unprocessable_entity }
     end
   end
+
+  def destroy
+    Conversation.find(params[:id]).destroy
+    redirect_to root_path(new_chat: true)
+  end
 end

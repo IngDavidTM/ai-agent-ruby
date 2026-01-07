@@ -41,10 +41,18 @@
 
     <div class="history-list">
       <% @conversations.each do |conv| %>
-        <%= link_to root_path(conversation_id: conv.id), class: "history-item #{'active' if conv.id == @conversation.id}" do %>
-          <span class="history-title"><%= conv.title || "Conversation #{conv.id}" %></span>
-          <span class="history-date"><%= time_ago_in_words(conv.created_at) %> ago</span>
-        <% end %>
+        <div class="history-item-wrapper <%= 'active' if conv.id == @conversation.id %>">
+          <%= link_to root_path(conversation_id: conv.id), class: "history-item" do %>
+            <span class="history-title"><%= conv.title || "Conversation #{conv.id}" %></span>
+            <span class="history-date"><%= time_ago_in_words(conv.created_at) %> ago</span>
+          <% end %>
+          
+          <%= button_to delete_conversation_path(conv), method: :delete, class: "delete-chat-button", form: { style: "display:inline-block;" }, title: "Delete Chat" do %>
+             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+               <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke-linecap="round" stroke-linejoin="round"/>
+             </svg>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </aside>
@@ -59,12 +67,28 @@
     </header>
 
     <div class="chat-area" id="chat-container">
-      <% @messages.each do |message| %>
-        <div class="message-wrapper <%= message.role %>">
-          <div class="message-bubble">
-            <%= markdown(message.content) %>
+      <% if @messages.any? %>
+        <% @messages.each do |message| %>
+          <div class="message-wrapper <%= message.role %>">
+            <div class="message-bubble">
+              <%= markdown(message.content) %>
+            </div>
+            <span class="message-time">Now</span>
           </div>
-          <span class="message-time">Now</span>
+        <% end %>
+      <% else %>
+        <div class="empty-state">
+           <div class="empty-icon">
+             <div class="orb-icon"></div>
+           </div>
+           <h2>Hello, Human</h2>
+           <p>I'm ready to help you create, code, or just chat.</p>
+           
+           <div class="suggestion-chips">
+              <button type="button" onclick="fillInput('What can you do?')">What can you do?</button>
+              <button type="button" onclick="fillInput('Write a Ruby script')">Write a Ruby script</button>
+              <button type="button" onclick="fillInput('Explain Quantum Physics')">Explain Quantum Physics</button>
+           </div>
         </div>
       <% end %>
     </div>
@@ -221,6 +245,12 @@
       
       // Prepend to list
       list.insertBefore(link, list.firstChild);
+    }
+    
+    // Suggestion chips helper
+    window.fillInput = function(text) {
+        document.querySelector('.glass-input').value = text;
+        document.querySelector('.glass-input').focus();
     }
   });
 </script>
