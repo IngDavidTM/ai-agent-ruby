@@ -280,22 +280,28 @@ body {
     .delete-chat-button {
       position: absolute;
       right: 10px;
-      background: none;
-      border: none;
-      color: rgba(255, 100, 100, 0.8);
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.2); // Subtle background for visibility
+      border: 1px solid rgba(255, 100, 100, 0.3);
+      color: #ff6b6b;
       cursor: pointer;
       opacity: 0;
-      padding: 6px;
+      padding: 8px; // Larger touch target
       border-radius: 50%;
-      transition: all 0.2s;
+      transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
       pointer-events: none;
       display: flex;
-      /* Fix alignment */
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
 
       &:hover {
-        background: rgba(255, 0, 0, 0.2);
-        color: #ff4444;
-        transform: scale(1.1);
+        background: #ff4444;
+        border-color: #ff4444;
+        color: #fff;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
       }
     }
   }
