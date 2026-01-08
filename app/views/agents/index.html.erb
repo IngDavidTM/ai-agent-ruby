@@ -165,7 +165,15 @@
                 window.history.pushState({}, '', newUrl);
                 
                 // Add to sidebar dynamically
-                addToSidebar(data.conversation_id, "New Chat");
+                addToSidebar(data.conversation_id, data.new_title || "New Chat");
+                
+                // Switch out of empty state if present
+                const emptyState = document.querySelector('.empty-state');
+                if (emptyState) emptyState.remove();
+             } else if (data.new_title) {
+                // Update existing sidebar item title
+                const sidebarItem = document.querySelector(`.history-item-wrapper a[href*="conversation_id=${data.conversation_id}"] .history-title`);
+                if (sidebarItem) sidebarItem.textContent = data.new_title;
              }
           }
           appendMessage('assistant', data.html, true); // true = isHtml

@@ -27,13 +27,27 @@ class AgentsController < ApplicationController
     # Save assistant message
     ai_message = @conversation.messages.create(role: response[:role], content: response[:content])
 
+    # Generate title if it's the first message
+    new_title = nil
+    if @conversation.messages.count <= 2
+        begin
+            title_prompt = "Generate a very short, concise title (max 5 words) for this conversation based on this user request: \"#{params[:message]}\". Return ONLY the title, no quotes."
+            title_response = llm.chat([{ role: "user", content: title_prompt }])
+            new_title = title_response[:content].strip.gsub(/^["']|["']$/, '') # Remove quotes if any
+            @conversation.update(title: new_title)
+        rescue => e
+            Rails.logger.error "Title Generation Error: #{e.message}"
+        end
+    end
+
     respond_to do |format|
       format.html { redirect_to root_path(conversation_id: @conversation.id) }
       format.json { render json: { 
         success: true, 
         conversation_id: @conversation.id, 
         message: ai_message.content,
-        html: ApplicationController.helpers.markdown(ai_message.content) # Render markdown server-side
+        html: ApplicationController.helpers.markdown(ai_message.content),
+        new_title: new_title
       } }
     end
   rescue => e
