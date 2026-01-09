@@ -1,0 +1,64 @@
+<div class="liquid-background" style="background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') no-repeat center center/cover;">
+</div>
+
+<!-- SVG Filter for Liquid Distortion (Reusing existing filter) -->
+<svg style="position: absolute; width: 0; height: 0;">
+  <defs>
+    <filter id="liquid-distortion-home">
+      <feTurbulence type="turbulence" baseFrequency="0.01 0.02" numOctaves="3" result="noise" seed="1"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+      <feGaussianBlur stdDeviation="0.5" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.9"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+</svg>
+
+<div class="glass-landing">
+  <nav class="landing-nav">
+    <div class="logo">Agent <span>OS</span></div>
+    <div class="nav-links">
+      <a href="#" class="nav-link">Features</a>
+      <a href="#" class="nav-link">About</a>
+      <a href="<%= chat_path %>" class="nav-btn">Launch App</a>
+    </div>
+  </nav>
+
+  <div class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Your Fluid <br> Intelligence <span class="gradient-text">Partner</span></h1>
+      <p class="hero-subtitle">
+        Experience a new era of interaction. Agent OS combines powerful AI with a 
+        liquid glass interface designed for focus and flow.
+      </p>
+      
+      <div class="hero-actions">
+        <a href="<%= chat_path %>" class="cta-button">
+          <span>Enter System</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <div class="glass-card float-card p-1">
+        <div class="card-icon">✨</div>
+        <h3>Smart Context</h3>
+        <p>Remembers your flows</p>
+      </div>
+      <div class="glass-card float-card p-2">
+        <div class="card-icon">💎</div>
+        <h3>Liquid UI</h3>
+        <p>Immersive design</p>
+      </div>
+      <div class="glass-card float-card p-3">
+        <div class="card-icon">⚡</div>
+        <h3>Fast Actions</h3>
+        <p>Instant execution</p>
+      </div>
+    </div>
+  </div>
+</div>
