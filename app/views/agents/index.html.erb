@@ -31,7 +31,7 @@
   <!-- Sidebar -->
   <aside class="glass-sidebar">
     <div class="sidebar-header">
-      <a href="<%= root_path(new_chat: true) %>" class="new-chat-button">
+      <a href="<%= chat_path(new_chat: true) %>" class="new-chat-button">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5V19M5 12H19" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -42,7 +42,7 @@
     <div class="history-list">
       <% @conversations.each do |conv| %>
         <div class="history-item-wrapper <%= 'active' if conv.id == @conversation.id %>">
-          <%= link_to root_path(conversation_id: conv.id), class: "history-item" do %>
+          <%= link_to chat_path(conversation_id: conv.id), class: "history-item" do %>
             <span class="history-title"><%= conv.title || "Conversation #{conv.id}" %></span>
             <span class="history-date"><%= time_ago_in_words(conv.created_at) %> ago</span>
           <% end %>
@@ -247,7 +247,7 @@
       
       // Create Link
       const link = document.createElement('a');
-      link.href = `/?conversation_id=${id}`;
+      link.href = `/chat?conversation_id=${id}`;
       link.className = 'history-item';
       link.innerHTML = `
         <span class="history-title">${title}</span>
