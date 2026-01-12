@@ -68,13 +68,21 @@ module LlmAdapters
             local_response(messages.last[:content], "Gemini Empty Response")
           end
         elsif response.status == 503
-          local_response(messages.last[:content], "Gemini Overloaded (503). Try again in a minute.")
+          error_msg = "Gemini Service Unavailable (503). Calculated backoff failed. Please try again later."
+          Rails.logger.error error_msg
+          local_response(messages.last[:content], error_msg)
         else
-          local_response(messages.last[:content], "Gemini Error #{response.status}: #{response.body}")
+          error_msg = "Gemini API Error: Status #{response.status} - Body: #{response.body}"
+          Rails.logger.error error_msg
+          local_response(messages.last[:content], "I encountered an error connecting to my brain. Status: #{response.status}")
         end
 
+      rescue Faraday::ConnectionFailed => e
+        Rails.logger.error "Gemini Connection Failed: #{e.message}"
+        local_response(messages.last[:content], "Network Error: Could not reach verify Gemini servers. Please check your internet connection.")
       rescue StandardError => e
-        local_response(messages.last[:content], "Connection Error: #{e.message}")
+        Rails.logger.error "Gemini Adapter Unexpected Error: #{e.message}\n#{e.backtrace.join("\n")}"
+        local_response(messages.last[:content], "An unexpected internal error occurred: #{e.message}")
       end
     end
 

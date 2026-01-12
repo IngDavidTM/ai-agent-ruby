@@ -10,13 +10,13 @@ class AgentsController < ApplicationController
   end
 
   def chat
-    @conversation = Conversation.find_by(id: params[:conversation_id]) || Conversation.create(title: "New Chat")
+    @conversation = Conversation.find_by(id: chat_params[:conversation_id]) || Conversation.create(title: "New Chat")
     
     # Save user message
-    @conversation.messages.create(role: "user", content: params[:message])
+    @conversation.messages.create(role: "user", content: chat_params[:message])
 
-    # Get conversation history for context
-    history = @conversation.messages.order(:created_at).map do |msg|
+    # Get conversation history for context (Limit to last 20 messages for context window optimization)
+    history = @conversation.messages.order(:created_at).last(20).map do |msg|
       { role: msg.role, content: msg.content }
     end
 
@@ -28,9 +28,8 @@ class AgentsController < ApplicationController
     ai_message = @conversation.messages.create(role: response[:role], content: response[:content])
 
     # Generate title if it's the first message
-    new_title = nil
     if @conversation.messages.count <= 2
-      new_title = llm.generate_title(params[:message])
+      new_title = llm.generate_title(chat_params[:message])
       @conversation.update(title: new_title) if new_title
     end
 
@@ -56,5 +55,11 @@ class AgentsController < ApplicationController
   def destroy
     Conversation.find(params[:id]).destroy
     redirect_to root_path(new_chat: true)
+  end
+
+  private
+
+  def chat_params
+    params.permit(:message, :conversation_id)
   end
 end
