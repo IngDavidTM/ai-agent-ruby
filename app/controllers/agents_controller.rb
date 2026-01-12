@@ -41,7 +41,8 @@ class AgentsController < ApplicationController
         conversation_id: @conversation.id, 
         message: ai_message.content,
         html: ApplicationController.helpers.markdown(ai_message.content),
-        new_title: new_title
+        new_title: new_title,
+        time: ai_message.created_at.strftime("%I:%M %p")
       } }
     end
   rescue => e

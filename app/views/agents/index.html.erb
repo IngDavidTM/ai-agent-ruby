@@ -73,7 +73,7 @@
             <div class="message-bubble">
               <%= markdown(message.content) %>
             </div>
-            <span class="message-time">Now</span>
+            <span class="message-time"><%= message.created_at.strftime("%I:%M %p") %></span>
           </div>
         <% end %>
       <% else %>
@@ -126,7 +126,8 @@
 
       // 1. Clear input & Optimistic UI
       input.value = '';
-      appendMessage('user', message);
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      appendMessage('user', message, false, now);
       
       // 2. Add Loading Indicator
       const loadingId = appendLoading();
@@ -176,7 +177,7 @@
                 if (sidebarItem) sidebarItem.textContent = data.new_title;
              }
           }
-          appendMessage('assistant', data.html, true); // true = isHtml
+          appendMessage('assistant', data.html, true, data.time);
         } else {
           appendMessage('assistant', "Error: " + (data.error || "Something went wrong"));
         }
@@ -190,7 +191,7 @@
       chatContainer.scrollTop = chatContainer.scrollHeight;
     });
 
-    function appendMessage(role, content, isHtml = false) {
+    function appendMessage(role, content, isHtml = false, time = 'Now') {
       const wrapper = document.createElement('div');
       wrapper.className = `message-wrapper ${role}`;
       
@@ -203,12 +204,12 @@
         bubble.textContent = content;
       }
 
-      const time = document.createElement('span');
-      time.className = 'message-time';
-      time.textContent = 'Now';
+      const timeSpan = document.createElement('span');
+      timeSpan.className = 'message-time';
+      timeSpan.textContent = time;
 
       wrapper.appendChild(bubble);
-      wrapper.appendChild(time);
+      wrapper.appendChild(timeSpan);
       chatContainer.appendChild(wrapper);
     }
 
