@@ -30,14 +30,8 @@ class AgentsController < ApplicationController
     # Generate title if it's the first message
     new_title = nil
     if @conversation.messages.count <= 2
-        begin
-            title_prompt = "Generate a very short, concise title (max 5 words) for this conversation based on this user request: \"#{params[:message]}\". Return ONLY the title, no quotes."
-            title_response = llm.chat([{ role: "user", content: title_prompt }])
-            new_title = title_response[:content].strip.gsub(/^["']|["']$/, '') # Remove quotes if any
-            @conversation.update(title: new_title)
-        rescue => e
-            Rails.logger.error "Title Generation Error: #{e.message}"
-        end
+      new_title = llm.generate_title(params[:message])
+      @conversation.update(title: new_title) if new_title
     end
 
     respond_to do |format|
