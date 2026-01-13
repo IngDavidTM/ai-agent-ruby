@@ -1,0 +1,47 @@
+<div class="liquid-background" style="background: url('https://images.unsplash.com/photo-1614850523296-63c194002798?q=80&w=2670&auto=format&fit=crop') no-repeat center center/cover;">
+</div>
+
+<div class="glass-landing">
+  <nav class="landing-nav">
+    <div class="logo">Agent <span>OS</span></div>
+    <div class="nav-links">
+      <%= link_to "Home", root_path, class: "nav-link" %>
+      <a href="#" class="nav-link" style="color: #fff; opacity: 1;">About</a>
+      <%= link_to "Launch App", chat_path, class: "nav-btn" %>
+    </div>
+  </nav>
+
+  <div class="glass-card about-card" style="max-width: 800px; margin: 40px auto; padding: 40px; position: relative; z-index: 2;">
+    <h1 style="font-size: 3rem; margin-bottom: 20px;">About <span class="gradient-text">Agent OS</span></h1>
+    
+    <p style="font-size: 1.2rem; line-height: 1.8; color: rgba(255,255,255,0.8); margin-bottom: 30px;">
+      Agent OS is an experimental fluid intelligence interface designed to rethink how we interact with AI. 
+      Moving away from static text boxes, we embrace a "Liquid Glass" aesthetic that feels alive, responsive, and immersive.
+    </p>
+
+    <div class="tech-stack" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
+      <div class="tech-item" style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="margin-top: 0;">⚡ Ruby on Rails 7</h3>
+        <p style="font-size: 0.9rem; opacity: 0.7;">Robust backend framework powering the agent orchestration.</p>
+      </div>
+      <div class="tech-item" style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="margin-top: 0;">💎 Google Gemini</h3>
+        <p style="font-size: 0.9rem; opacity: 0.7;">Advanced multimodal reasoning model via API v1beta.</p>
+      </div>
+      <div class="tech-item" style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 style="margin-top: 0;">✨ Glassmorphism</h3>
+        <p style="font-size: 0.9rem; opacity: 0.7;">Custom SCSS design system with blur filters and light refractions.</p>
+      </div>
+    </div>
+
+    <div class="credits" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center;">
+      <p>Created by <strong>David</strong> with the help of <strong>Google DeepMind's AI</strong>.</p>
+      <div style="margin-top: 20px;">
+        <%= link_to chat_path, class: "cta-button", style: "display: inline-flex; align-items: center; gap: 10px; background: #fff; color: #000; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;" do %>
+          <span>Start Chatting</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
