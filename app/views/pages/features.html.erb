@@ -5,15 +5,7 @@
 </div>
 
 <div class="glass-landing">
-  <nav class="landing-nav">
-    <div class="logo">Agent <span>OS</span></div>
-    <div class="nav-links">
-      <%= link_to "Home", root_path, class: "nav-link" %>
-      <%= link_to "About", about_path, class: "nav-link" %>
-      <a href="#" class="nav-link" style="color: #fff; opacity: 1;">Features</a>
-      <%= link_to "Launch App", chat_path, class: "nav-btn" %>
-    </div>
-  </nav>
+  <%= render 'shared/landing_navbar' %>
 
   <div class="container" style="max-width: 1000px; margin: 0 auto; text-align: center; position: relative; z-index: 2;">
     <h1 style="font-size: 3rem; margin-bottom: 40px;">System <span class="gradient-text">Capabilities</span></h1>

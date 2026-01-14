@@ -16,14 +16,7 @@
 </svg>
 
 <div class="glass-landing">
-  <nav class="landing-nav">
-    <div class="logo">Agent <span>OS</span></div>
-    <div class="nav-links">
-      <%= link_to "Features", features_path, class: "nav-link" %>
-      <%= link_to "About", about_path, class: "nav-link" %>
-      <a href="<%= chat_path %>" class="nav-btn">Launch App</a>
-    </div>
-  </nav>
+  <%= render 'shared/landing_navbar' %>
 
   <div class="hero-section">
     <div class="hero-content">

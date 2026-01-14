@@ -1,0 +1,9 @@
+<nav class="landing-nav">
+  <div class="logo">Agent <span>OS</span></div>
+  <div class="nav-links">
+    <%= link_to "Home", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
+    <%= link_to "Features", features_path, class: "nav-link #{'active' if current_page?(features_path)}" %>
+    <%= link_to "About", about_path, class: "nav-link #{'active' if current_page?(about_path)}" %>
+    <%= link_to "Launch App", chat_path, class: "nav-btn" %>
+  </div>
+</nav>
