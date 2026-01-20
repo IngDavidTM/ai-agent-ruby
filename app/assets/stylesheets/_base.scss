@@ -1,0 +1,81 @@
+// Base Styles - Body, Scrollbar, Global Resets
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #000;
+    color: $text-primary;
+    // overflow: hidden; // Removed to allow scrolling on landing pages
+    min-height: 100vh;
+}
+
+// Custom Scrollbar for Coherence
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}
+
+// Fluid Background
+.liquid-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: #0f0c29;
+    background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+    overflow: hidden;
+
+    .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.6;
+        animation: float 10s infinite ease-in-out;
+    }
+
+    .orb-1 {
+        width: 60vh;
+        height: 60vh;
+        background: #ff00cc;
+        top: -10%;
+        left: -10%;
+        animation-duration: 15s;
+        background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    }
+
+    .orb-2 {
+        width: 40vh;
+        height: 40vh;
+        background: #333399;
+        bottom: 10%;
+        right: -5%;
+        animation-duration: 12s;
+        background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+    }
+
+    .orb-3 {
+        width: 30vh;
+        height: 30vh;
+        background: #00d2ff;
+        top: 40%;
+        left: 40%;
+        animation-duration: 20s;
+        background: radial-gradient(circle, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+    }
+}

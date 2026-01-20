@@ -1,0 +1,206 @@
+// Landing Page Components
+
+.glass-landing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.landing-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+
+        span {
+            font-weight: 300;
+            opacity: 0.7;
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+
+            &:hover,
+            &.active {
+                color: #fff;
+                opacity: 1;
+            }
+        }
+    }
+
+    .nav-btn {
+        padding: 10px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        background: rgba(255, 255, 255, 0.05);
+        transition: all 0.3s;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+.hero-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .hero-content {
+        max-width: 600px;
+
+        .hero-title {
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 24px;
+            font-weight: 800;
+            letter-spacing: -2px;
+
+            .gradient-text {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: transparent;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            svg {
+                transition: transform 0.3s;
+            }
+
+            &:hover svg {
+                transform: translateX(4px);
+            }
+        }
+    }
+
+    .hero-visual {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        max-width: 400px;
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s;
+
+            .card-icon {
+                font-size: 40px;
+                margin-bottom: 12px;
+            }
+
+            h3 {
+                font-size: 18px;
+                margin: 0 0 8px;
+            }
+
+            p {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.6);
+                margin: 0;
+            }
+
+            &.float-card {
+                animation: floatCard 6s infinite ease-in-out;
+            }
+
+            &.p-1 {
+                animation-delay: 0s;
+            }
+
+            &.p-2 {
+                animation-delay: 1s;
+            }
+
+            &.p-3 {
+                animation-delay: 2s;
+            }
+
+            &:hover {
+                transform: translateY(-5px);
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+        }
+    }
+}
+
+.about-card,
+.feature-card {
+    &:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+.features-grid {
+    .feature-card {
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
