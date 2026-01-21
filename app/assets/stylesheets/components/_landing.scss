@@ -131,54 +131,90 @@
     }
 
     .hero-visual {
+        position: relative;
+        width: 400px;
+        height: 600px;
         display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        max-width: 400px;
+        align-items: center;
+        justify-content: center;
 
         .glass-card {
+            position: absolute;
+            width: 280px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 24px;
-            transition: all 0.3s;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 
             .card-icon {
-                font-size: 40px;
+                font-size: 32px;
                 margin-bottom: 12px;
+                background: linear-gradient(135deg, $accent-color, lighten($accent-color, 20%));
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
             }
 
             h3 {
                 font-size: 18px;
                 margin: 0 0 8px;
+                color: #fff;
             }
 
             p {
                 font-size: 14px;
-                color: rgba(255, 255, 255, 0.6);
+                color: rgba(255, 255, 255, 0.7);
                 margin: 0;
+                line-height: 1.5;
             }
 
-            &.float-card {
-                animation: floatCard 6s infinite ease-in-out;
+            // Stacking Logic
+            &:nth-child(1) {
+                // Smart Context (Bottom)
+                transform: translateY(-40px) scale(0.9);
+                z-index: 1;
+                opacity: 0.5;
+                filter: blur(2px);
             }
 
-            &.p-1 {
-                animation-delay: 0s;
+            &:nth-child(2) {
+                // Liquid UI (Middle)
+                transform: translateY(-20px) scale(0.95);
+                z-index: 2;
+                opacity: 0.8;
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(12px);
             }
 
-            &.p-2 {
-                animation-delay: 1s;
+            &:nth-child(3) {
+                // Fast Actions (Top)
+                transform: translateY(0) scale(1);
+                z-index: 3;
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(255, 255, 255, 0.3);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(15px);
             }
 
-            &.p-3 {
-                animation-delay: 2s;
+            &:nth-child(3) {
+                // Fast Actions
+                transform: translateY(0) scale(1);
+                z-index: 3;
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.3);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             }
 
             &:hover {
-                transform: translateY(-5px);
-                border-color: rgba(255, 255, 255, 0.4);
+                transform: translateY(-10px) scale(1.05) !important;
+                z-index: 10;
+                opacity: 1 !important;
+                filter: blur(0) !important;
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.5);
             }
         }
     }

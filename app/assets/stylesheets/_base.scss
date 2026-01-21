@@ -38,45 +38,45 @@ body {
     width: 100vw;
     height: 100vh;
     z-index: -1;
-    background: #0f0c29;
-    background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
+    background: #050510; // Darker base
+    background: linear-gradient(to bottom, #0f0c29, #1a1a2e, #050510);
     overflow: hidden;
 
     .orb {
         position: absolute;
         border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.6;
+        filter: blur(100px); // Softer blur
+        opacity: 0.4; // Reduced opacity for less "washed out" look
         animation: float 10s infinite ease-in-out;
     }
 
     .orb-1 {
-        width: 60vh;
-        height: 60vh;
+        width: 70vh;
+        height: 70vh;
         background: #ff00cc;
-        top: -10%;
+        top: -20%;
         left: -10%;
-        animation-duration: 15s;
-        background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+        animation-duration: 20s;
+        background: radial-gradient(circle, rgba(238, 174, 202, 0.4) 0%, rgba(148, 187, 233, 0.3) 100%);
     }
 
     .orb-2 {
-        width: 40vh;
-        height: 40vh;
+        width: 50vh;
+        height: 50vh;
         background: #333399;
-        bottom: 10%;
-        right: -5%;
-        animation-duration: 12s;
-        background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+        bottom: -10%;
+        right: -10%;
+        animation-duration: 15s;
+        background: radial-gradient(circle, rgba(63, 94, 251, 0.4) 0%, rgba(252, 70, 107, 0.3) 100%);
     }
 
     .orb-3 {
-        width: 30vh;
-        height: 30vh;
+        width: 40vh;
+        height: 40vh;
         background: #00d2ff;
-        top: 40%;
-        left: 40%;
-        animation-duration: 20s;
-        background: radial-gradient(circle, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+        top: 30%;
+        left: 30%;
+        animation-duration: 25s;
+        background: radial-gradient(circle, rgba(131, 58, 180, 0.4) 0%, rgba(253, 29, 29, 0.3) 50%, rgba(252, 176, 69, 0.3) 100%);
     }
 }
